@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8938243E1810CB7700D1E588 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8938243D1810CB7700D1E588 /* Carbon.framework */; };
+		8938243F1810CB7D00D1E588 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8938243D1810CB7700D1E588 /* Carbon.framework */; };
 		A2126B7516FB30B0000BE21C /* XVimMark.m in Sources */ = {isa = PBXBuildFile; fileRef = A2126B7416FB30B0000BE21C /* XVimMark.m */; };
 		A2126B7816FB4806000BE21C /* XVimMarks.m in Sources */ = {isa = PBXBuildFile; fileRef = A2126B7716FB4806000BE21C /* XVimMarks.m */; };
 		A216F3A1156560FE00AD2529 /* IDEEditorArea+XVim.m in Sources */ = {isa = PBXBuildFile; fileRef = A216F3A0156560FE00AD2529 /* IDEEditorArea+XVim.m */; };
@@ -199,6 +201,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		8938243D1810CB7700D1E588 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
 		A2126B7316FB30B0000BE21C /* XVimMark.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XVimMark.h; path = XVim/XVimMark.h; sourceTree = SOURCE_ROOT; };
 		A2126B7416FB30B0000BE21C /* XVimMark.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XVimMark.m; path = XVim/XVimMark.m; sourceTree = SOURCE_ROOT; };
 		A2126B7616FB4806000BE21C /* XVimMarks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XVimMarks.h; path = XVim/XVimMarks.h; sourceTree = SOURCE_ROOT; };
@@ -375,6 +378,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8938243E1810CB7700D1E588 /* Carbon.framework in Frameworks */,
 				A28F427217EEDBC200A3F7AE /* AppKit.framework in Frameworks */,
 				A28F427317EEDBC200A3F7AE /* Cocoa.framework in Frameworks */,
 				A2E7E46117F0380F008F045A /* IDESourceEditor.ideplugin in Frameworks */,
@@ -390,6 +394,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A2E7E45717F03113008F045A /* Cocoa.framework in Frameworks */,
+				8938243F1810CB7D00D1E588 /* Carbon.framework in Frameworks */,
 				A2420B3E14DDE59B008741DA /* AppKit.framework in Frameworks */,
 				A2E7E46517F03835008F045A /* DVTFoundation.framework in Frameworks */,
 				A2E7E46617F03835008F045A /* DVTKit.framework in Frameworks */,
@@ -499,6 +504,7 @@
 		A2B4BABA14D59F6600D817B0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				8938243D1810CB7700D1E588 /* Carbon.framework */,
 				A2E7E46017F0380F008F045A /* IDESourceEditor.ideplugin */,
 				A2E7E45E17F03802008F045A /* DVTFoundation.framework */,
 				A2E7E45C17F037FF008F045A /* DVTKit.framework */,

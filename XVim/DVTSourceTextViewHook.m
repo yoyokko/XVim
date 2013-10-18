@@ -29,6 +29,7 @@
 #import <objc/runtime.h>
 #import <string.h>
 #import "NSTextView+VimOperation.h"
+#import <Carbon/Carbon.h>
 
 @implementation DVTSourceTextViewHook
 
@@ -153,6 +154,66 @@
         if( nil == window ){
             [base keyDown_:theEvent];
             return;
+        }
+        
+        UInt32 deadKeyState = 0;
+        UniCharCount actualCount = 0;
+        UniChar baseChar;
+        TISInputSourceRef sourceRef = TISCopyCurrentKeyboardLayoutInputSource();
+        CFDataRef keyLayoutPtr = (CFDataRef)TISGetInputSourceProperty(sourceRef, kTISPropertyUnicodeKeyLayoutData);
+        CFRelease(sourceRef);
+        UCKeyTranslate((UCKeyboardLayout*)CFDataGetBytePtr(keyLayoutPtr),
+                       [theEvent keyCode],
+                       kUCKeyActionDown,
+                       0,
+                       LMGetKbdLast(),
+                       kUCKeyTranslateNoDeadKeysBit,
+                       &deadKeyState,
+                       1,
+                       &actualCount,
+                       &baseChar);
+        
+        NSUInteger flag = [theEvent modifierFlags];
+        BOOL isShiftPressed = flag & NSShiftKeyMask ? YES : NO;
+        BOOL isControlPressed = flag & NSControlKeyMask ? YES : NO;
+        switch (baseChar)
+        {
+            case 13: // enter
+                if (isShiftPressed) // jump to end of line and insert a ;
+                {
+                    NSRange currentRange = [base selectedRange];
+                    NSRange newLineRange = [base.string rangeOfCharacterFromSet:[NSCharacterSet newlineCharacterSet] options:NSCaseInsensitiveSearch range:NSMakeRange(currentRange.location, base.string.length - currentRange.location - 1)];
+                    if (newLineRange.location != NSNotFound)
+                    {
+                        if (newLineRange.location > 1)
+                        {
+                            unichar character = [base.string characterAtIndex:newLineRange.location - 1];
+                            if (character == '{') // just insert a new line before character
+                            {
+                                [base setSelectedRange:NSMakeRange(newLineRange.location - 2, 0)];
+                                [base insertNewline:nil];
+                                [base handleSelectNextPlaceholder];
+                            }
+                            else
+                            {
+                                [base setSelectedRange:NSMakeRange(newLineRange.location, 0)];
+                                [base insertText:@";"];
+                                [base setSelectedRange:NSMakeRange(newLineRange.location + 1, 0)];
+                            }
+                        }
+                        return;
+                    }
+                }
+                else if (isControlPressed) // jump to end of line
+                {
+                    NSRange currentRange = [base selectedRange];
+                    NSRange newLineRange = [base.string rangeOfCharacterFromSet:[NSCharacterSet newlineCharacterSet] options:NSCaseInsensitiveSearch range:NSMakeRange(currentRange.location, base.string.length - currentRange.location - 1)];
+                    if (newLineRange.location != NSNotFound)
+                    {
+                        [base setSelectedRange:NSMakeRange(newLineRange.location, 0)];
+                        return;
+                    }
+                }
         }
         
         if( [window handleKeyEvent:theEvent] ){
