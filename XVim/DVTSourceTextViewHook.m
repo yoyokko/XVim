@@ -176,8 +176,59 @@
         NSUInteger flag = [theEvent modifierFlags];
         BOOL isShiftPressed = flag & NSShiftKeyMask ? YES : NO;
         BOOL isControlPressed = flag & NSControlKeyMask ? YES : NO;
+        // f - 102, b - 98, a - 97, e - 101, p - 112, n - 110
+        /*
+            cmd+f: Move one character forward
+            cmd+b: Move one character back
+            cmd+a: Move to beginning of line
+            cmd+e: Move to end of line
+            cmd+p: Move to previous line
+            cmd+n: Move to next line
+         */
         switch (baseChar)
         {
+            case 102: // f, forward
+                if (isControlPressed)
+                {
+                    [base moveRight:nil];
+                    return;
+                }
+                break;
+            case 98: // b, back
+                if (isControlPressed)
+                {
+                    [base moveLeft:nil];
+                    return;
+                }
+                break;
+            case 97: // a, begining of line
+                if (isControlPressed)
+                {
+                    [base moveToBeginningOfLine:nil];
+                    return;
+                }
+                break;
+            case 101: // e, end of line
+                if (isControlPressed)
+                {
+                    [base moveToEndOfLine:nil];
+                    return;
+                }
+                break;
+            case 112: // p, previous line
+                if (isControlPressed)
+                {
+                    [base moveUp:nil];
+                    return;
+                }
+                break;
+            case 110: // n, next line
+                if (isControlPressed)
+                {
+                    [base moveDown:nil];
+                    return;
+                }
+                break;
             case 13: // enter
                 if (isShiftPressed) // jump to end of line and insert a ;
                 {
