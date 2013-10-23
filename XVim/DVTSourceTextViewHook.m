@@ -198,20 +198,43 @@ static BOOL tabSelectionEnable = YES;
             case 9: // tab
                 if (tabSelectionEnable && base.completionController.showingCompletions)
                 {
-                    if (isOptionPressed)
+                    DVTTextCompletionTableView *tableView = [base.completionController.currentSession.listWindowController valueForKey:@"completionsTableView"];
+                    if (tableView.numberOfRows == 1)
                     {
-                        if ([base.completionController.currentSession handleMoveUp] == NO)
-                        {
-                            [base.completionController acceptCurrentCompletion];
-                        }
+                        [base.completionController.currentSession insertCurrentCompletion];
                     }
                     else
                     {
-                        if ([base.completionController.currentSession handleMoveDown] == NO)
+                        if (isOptionPressed)
                         {
-                            [base.completionController acceptCurrentCompletion];
+                            if (tableView.selectedRow == 0)
+                            {
+                                [tableView selectRowIndexes:[NSIndexSet indexSetWithIndex:(NSUInteger)([tableView numberOfRows] - 1)] byExtendingSelection:NO];
+                            }
+                            else
+                            {
+                                if ([base.completionController.currentSession handleMoveUp] == NO)
+                                {
+                                    [base.completionController.currentSession insertCurrentCompletion];
+                                }
+                            }
+                        }
+                        else
+                        {
+                            if (tableView.selectedRow == ([tableView numberOfRows] - 1))
+                            {
+                                [tableView selectRowIndexes:[NSIndexSet indexSetWithIndex:0] byExtendingSelection:NO];
+                            }
+                            else
+                            {
+                                if ([base.completionController.currentSession handleMoveDown] == NO)
+                                {
+                                    [base.completionController.currentSession insertCurrentCompletion];
+                                }
+                            }
                         }
                     }
+                    
                     return;
                 }
                 break;
