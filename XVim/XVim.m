@@ -81,6 +81,14 @@ NSString * const XVimDocumentPathKey = @"XVimDocumentPathKey";
     item1.keyEquivalent = @"X";
     [m addItem:item1];
     
+    NSMenuItem *tabItem = [[[NSMenuItem alloc] init] autorelease];
+    tabItem.title = @"Tab to select auto completions";
+    [tabItem setEnabled:YES];
+    [tabItem setState:NSOnState];
+    tabItem.target = [XVim instance];
+    tabItem.action = @selector(toggleTab:);
+    [m addItem:tabItem];
+    
     if( [XVim instance].options.debug ){
         NSMenuItem* item2 = [[[NSMenuItem alloc] init] autorelease];
         item2.title = @"Run Test";
@@ -306,6 +314,20 @@ NSString * const XVimDocumentPathKey = @"XVimDocumentPathKey";
 
 - (void)runTest:(id)sender{
     [[[[XVimTester alloc] init] autorelease] runTest];
+}
+
+- (void) toggleTab:(id) sender
+{
+    if( [(NSCell*)sender state] == NSOnState )
+    {
+        [DVTSourceTextViewHook setTabSelectionEnable:YES];
+        [(NSCell*)sender setState:NSOffState];
+    }
+    else
+    {
+        [DVTSourceTextViewHook setTabSelectionEnable:NO];
+        [(NSCell*)sender setState:NSOnState];
+    }
 }
 
 - (void)toggleXVim:(id)sender{

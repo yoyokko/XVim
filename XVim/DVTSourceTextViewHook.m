@@ -31,6 +31,8 @@
 #import "NSTextView+VimOperation.h"
 #import <Carbon/Carbon.h>
 
+static BOOL tabSelectionEnable = YES;
+
 @implementation DVTSourceTextViewHook
 
 + (void)hook:(NSString*)method{
@@ -42,6 +44,11 @@
 + (void)unhook:(NSString*)method{
     NSString* cls = @"DVTSourceTextView";
     [Hooker unhookClass:cls method:method];
+}
+
++ (void) setTabSelectionEnable:(BOOL) enable
+{
+    tabSelectionEnable = enable;
 }
 
 + (void)hook{
@@ -176,7 +183,8 @@
         NSUInteger flag = [theEvent modifierFlags];
         BOOL isShiftPressed = flag & NSShiftKeyMask ? YES : NO;
         BOOL isControlPressed = flag & NSControlKeyMask ? YES : NO;
-        // f - 102, b - 98, a - 97, e - 101, p - 112, n - 110
+        BOOL isOptionPressed = flag & NSAlternateKeyMask ? YES : NO;
+        // f - 102, b - 98, a - 97, e - 101, p - 112, n - 110, tab - 9
         /*
             cmd+f: Move one character forward
             cmd+b: Move one character back
@@ -187,6 +195,26 @@
          */
         switch (baseChar)
         {
+            case 9: // tab
+                if (tabSelectionEnable && base.completionController.showingCompletions)
+                {
+                    if (isOptionPressed)
+                    {
+                        if ([base.completionController.currentSession handleMoveUp] == NO)
+                        {
+                            [base.completionController acceptCurrentCompletion];
+                        }
+                    }
+                    else
+                    {
+                        if ([base.completionController.currentSession handleMoveDown] == NO)
+                        {
+                            [base.completionController acceptCurrentCompletion];
+                        }
+                    }
+                    return;
+                }
+                break;
             case 102: // f, forward
                 if (isControlPressed)
                 {

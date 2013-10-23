@@ -15,6 +15,7 @@
 @interface DVTSourceTextViewHook : NSObject
 + (void)hook;
 + (void)unhook;
++ (void) setTabSelectionEnable:(BOOL) enable;
 @end
 
 @interface DVTSourceTextView(Hook)
