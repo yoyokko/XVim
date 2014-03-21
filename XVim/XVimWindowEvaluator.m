@@ -287,11 +287,11 @@
     if( relative ){
         // Relative index (rotation)
         NSInteger idx = (NSInteger)[allEditors indexOfObject:current] + (count%numEditors) + numEditors; // add numEditors to make it always positive
-        [allEditors[(NSUInteger)idx%numEditors] takeFocus];
+        [allEditors[(NSUInteger)(idx%numEditors)] takeFocus];
     }else{
         // Absolute index (Note: both count and numEditors are not 0 here)
         count = MIN(ABS(count), numEditors) - 1; // -1 to convert it to array index
-        [allEditors[(NSUInteger)count%numEditors] takeFocus];
+        [allEditors[(NSUInteger)(count%numEditors)] takeFocus];
     }
 }
 

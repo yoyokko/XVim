@@ -183,7 +183,7 @@ static BOOL tabSelectionEnable = YES;
         NSUInteger flag = [theEvent modifierFlags];
         BOOL isShiftPressed = flag & NSShiftKeyMask ? YES : NO;
         BOOL isControlPressed = flag & NSControlKeyMask ? YES : NO;
-        BOOL isOptionPressed = flag & NSAlternateKeyMask ? YES : NO;
+//        BOOL isOptionPressed = flag & NSAlternateKeyMask ? YES : NO;
         // f - 102, b - 98, a - 97, e - 101, p - 112, n - 110, tab - 9
         /*
             cmd+f: Move one character forward
@@ -195,49 +195,49 @@ static BOOL tabSelectionEnable = YES;
          */
         switch (baseChar)
         {
-            case 9: // tab
-                if (tabSelectionEnable && base.completionController.showingCompletions)
-                {
-                    DVTTextCompletionTableView *tableView = [base.completionController.currentSession.listWindowController valueForKey:@"completionsTableView"];
-                    if (tableView.numberOfRows == 1)
-                    {
-                        [base.completionController.currentSession insertCurrentCompletion];
-                    }
-                    else
-                    {
-                        if (isOptionPressed)
-                        {
-                            if (tableView.selectedRow == 0)
-                            {
-                                [tableView selectRowIndexes:[NSIndexSet indexSetWithIndex:(NSUInteger)([tableView numberOfRows] - 1)] byExtendingSelection:NO];
-                            }
-                            else
-                            {
-                                if ([base.completionController.currentSession handleMoveUp] == NO)
-                                {
-                                    [base.completionController.currentSession insertCurrentCompletion];
-                                }
-                            }
-                        }
-                        else
-                        {
-                            if (tableView.selectedRow == ([tableView numberOfRows] - 1))
-                            {
-                                [tableView selectRowIndexes:[NSIndexSet indexSetWithIndex:0] byExtendingSelection:NO];
-                            }
-                            else
-                            {
-                                if ([base.completionController.currentSession handleMoveDown] == NO)
-                                {
-                                    [base.completionController.currentSession insertCurrentCompletion];
-                                }
-                            }
-                        }
-                    }
-                    
-                    return;
-                }
-                break;
+//            case 9: // tab
+//                if (tabSelectionEnable && base.completionController.showingCompletions)
+//                {
+//                    DVTTextCompletionTableView *tableView = [base.completionController.currentSession.listWindowController valueForKey:@"completionsTableView"];
+//                    if (tableView.numberOfRows == 1)
+//                    {
+//                        [base.completionController.currentSession insertCurrentCompletion];
+//                    }
+//                    else
+//                    {
+//                        if (isOptionPressed)
+//                        {
+//                            if (tableView.selectedRow == 0)
+//                            {
+//                                [tableView selectRowIndexes:[NSIndexSet indexSetWithIndex:(NSUInteger)([tableView numberOfRows] - 1)] byExtendingSelection:NO];
+//                            }
+//                            else
+//                            {
+//                                if ([base.completionController.currentSession handleMoveUp] == NO)
+//                                {
+//                                    [base.completionController.currentSession insertCurrentCompletion];
+//                                }
+//                            }
+//                        }
+//                        else
+//                        {
+//                            if (tableView.selectedRow == ([tableView numberOfRows] - 1))
+//                            {
+//                                [tableView selectRowIndexes:[NSIndexSet indexSetWithIndex:0] byExtendingSelection:NO];
+//                            }
+//                            else
+//                            {
+//                                if ([base.completionController.currentSession handleMoveDown] == NO)
+//                                {
+//                                    [base.completionController.currentSession insertCurrentCompletion];
+//                                }
+//                            }
+//                        }
+//                    }
+//                    
+//                    return;
+//                }
+//                break;
             case 102: // f, forward
                 if (isControlPressed)
                 {
