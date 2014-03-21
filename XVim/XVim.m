@@ -81,13 +81,13 @@ NSString * const XVimDocumentPathKey = @"XVimDocumentPathKey";
     item1.keyEquivalent = @"X";
     [m addItem:item1];
     
-    NSMenuItem *tabItem = [[[NSMenuItem alloc] init] autorelease];
-    tabItem.title = @"Tab to select auto completions";
-    [tabItem setEnabled:YES];
-    [tabItem setState:NSOnState];
-    tabItem.target = [XVim instance];
-    tabItem.action = @selector(toggleTab:);
-    [m addItem:tabItem];
+//    NSMenuItem *tabItem = [[[NSMenuItem alloc] init] autorelease];
+//    tabItem.title = @"Tab to select auto completions";
+//    [tabItem setEnabled:YES];
+//    [tabItem setState:NSOnState];
+//    tabItem.target = [XVim instance];
+//    tabItem.action = @selector(toggleTab:);
+//    [m addItem:tabItem];
     
     if( [XVim instance].options.debug ){
         NSMenuItem* item2 = [[[NSMenuItem alloc] init] autorelease];
